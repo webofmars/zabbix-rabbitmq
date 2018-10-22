@@ -1,6 +1,6 @@
 #!/bin/bash
 STATUS=$(sudo /usr/sbin/rabbitmqctl -q cluster_status)
-LIST_NODES=$(echo $STATUS |grep -o "{running_nodes.*.}," | sed -n '/running_nodes,\[.*\]\},/p' | sed  -r 's/\[|\]|\{|\}|running_nodes,//g')
+LIST_NODES=$(echo $STATUS | perl -ne '/running_nodes,\[(.*?)\]/ && print $1')
 ARRAY_LIST_NODES=$(echo $LIST_NODES | tr "," "\n"| tr "\'" "\ ")
 FIRST_ELEMENT=1
 type_detect=0
